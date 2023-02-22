@@ -4,7 +4,7 @@ DOCKER_F	:= $(DOCKER_DIR)/docker-compose.yml
 
 
 up:
-	@sudo docker-compose -f $(DOCKER_F) up
+	@sudo docker-compose -f $(DOCKER_F) up -d
 
 build:
 	@sudo docker-compose -f $(DOCKER_F) build
