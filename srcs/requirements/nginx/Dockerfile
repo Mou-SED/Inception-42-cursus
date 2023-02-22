@@ -1,12 +1,15 @@
 FROM alpine:3.16
 
-# WORKDIR /etc/nginx
-RUN apk update && apk upgrade && apk add --no-cache nginx
+RUN apk update && apk upgrade && apk add --no-cache nginx openssl
 
-COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /etc/nginx/ssl/ && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+	-keyout /etc/nginx/ssl/moseddik.42.key -out /etc/nginx/ssl/moseddik.42.crt \
+	-subj "/C=MA/ST=/L=/O=/OU=/CN=moseddik"
+
+COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
 
 COPY ./tools/index.html /var/www/
 
-EXPOSE 80
+EXPOSE 443
 
-CMD ["nginx"]
+CMD [ "nginx", "-g", "daemon off;" ]

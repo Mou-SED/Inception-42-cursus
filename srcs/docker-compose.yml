@@ -1,11 +1,14 @@
-version: "3.3"
+---
+version: "3"
 services:
   nginx:
     build:
       context : ./requirements/nginx
       dockerfile: Dockerfile
+    container_name: c_ngnix
     ports:
-      - "80:80"
-    volumes:
-      - "/home/moseddik/data:/etc/nginx/http.d/"
-    image: m_ngnix
+      - "443:443"
+    # volumes:
+    #   - "/home/moseddik/data:/etc/nginx/http.d/"
+    image: "ngnix:1337"
+    restart: always
