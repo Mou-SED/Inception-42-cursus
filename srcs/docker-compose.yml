@@ -1,14 +1,38 @@
 ---
 version: "3"
 services:
+
   nginx:
     build:
       context : ./requirements/nginx
       dockerfile: Dockerfile
-    container_name: c_ngnix
+    container_name: ngnix
     ports:
       - "443:443"
     # volumes:
-    #   - "/home/moseddik/data:/etc/nginx/http.d/"
+    #   - db:/etc/nginx/http.d/
     image: "ngnix:1337"
-    restart: always
+    restart: on-failure
+
+  mariadb:
+    build:
+      context : ./requirements/mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb
+    image: mariadb:1337
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: on-failure
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/moseddik/data
+  nginx:
