@@ -9,9 +9,13 @@ services:
     container_name: ngnix
     ports:
       - "443:443"
-    # volumes:
-    #   - db:/etc/nginx/http.d/
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html
     image: "ngnix:1337"
+    networks:
+      - inception
     restart: on-failure
 
   mariadb:
@@ -24,8 +28,24 @@ services:
       - .env
     volumes:
       - db:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    networks:
+      - inception
+    restart: on-failure
+
+  wordpress:
+    build:
+      context : ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    image: wordpress:1337
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
     restart: on-failure
 
 volumes:
@@ -34,5 +54,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/moseddik/data
-  nginx:
+      device: /home/moseddik/data/mariadb
+
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/moseddik/data/wordpress
+
+networks:
+  inception:
