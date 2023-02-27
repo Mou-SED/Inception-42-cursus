@@ -1,9 +1,13 @@
 DOCKER_DIR	:= ./srcs
+MARIADB_DIR	:= /home/moseddik/data/mariadb
+WPRESS_DIR	:= /home/moseddik/data/wordpress
 
 DOCKER_F	:= $(DOCKER_DIR)/docker-compose.yml
 
 
 up:
+	@mkdir -p $(MARIADB_DIR)
+	@mkdir -p $(WPRESS_DIR)
 	@docker-compose -f $(DOCKER_F) up -d --build
 
 build:
@@ -30,8 +34,10 @@ fclean:
 	@docker system prune --all --force --volumes
 	@docker network prune --force
 	@docker volume prune --force
+	@docker volume rm $$(docker volume ls -q)
+	@sudo rm -rf /home/moseddik/data/*
 
 re : fclean up
 
 
-.PHONY: up build start stop rm down fclean
+.PHONY: up build start stop rm down fclean re
