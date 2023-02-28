@@ -4,6 +4,8 @@ WPRESS_DIR	:= /home/moseddik/data/wordpress
 
 DOCKER_F	:= $(DOCKER_DIR)/docker-compose.yml
 
+MAKEFLAGS := --silent
+
 
 up:
 	@mkdir -p $(MARIADB_DIR)
@@ -38,6 +40,9 @@ fclean:
 	@sudo rm -rf /home/moseddik/data/*
 
 re : fclean up
+
+logs:
+	docker-compose -f $(DOCKER_F) logs --follow
 
 
 .PHONY: up build start stop rm down fclean re
