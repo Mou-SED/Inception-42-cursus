@@ -8,7 +8,6 @@ RUN mkdir -p /etc/nginx/ssl/ && openssl req -x509 -nodes -days 365 -newkey rsa:2
 
 COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
 
-COPY ./tools/index.html /var/www/
 
 EXPOSE 443
 

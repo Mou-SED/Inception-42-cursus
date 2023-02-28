@@ -1,5 +1,6 @@
-FROM alpine:3.15
+FROM alpine:3.16
 
+RUN sed -i "s/6/5/g" /etc/apk/repositories
 
 RUN apk add --no-cache curl php7 php7-phar php7-common php7-session php7-iconv \
 	 php7-json php7-gd php7-curl php7-xml php7-mysqli php7-imap php7-cgi fcgi \
@@ -9,8 +10,12 @@ RUN apk add --no-cache curl php7 php7-phar php7-common php7-session php7-iconv \
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	 && chmod 777 wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+	 
 
 COPY ./tools/script.sh /tmp/
 
+COPY ./tools/index.html /tmp/
 
-CMD [ "tail","-f" ]
+COPY ./conf/php-fpm.conf /etc/php7/
+
+ENTRYPOINT [ "/tmp/script.sh" ]

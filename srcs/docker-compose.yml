@@ -6,13 +6,13 @@ services:
     build:
       context : ./requirements/nginx
       dockerfile: Dockerfile
-    container_name: ngnix
+    container_name: nginx
     ports:
       - "443:443"
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www
     image: "ngnix:1337"
     networks:
       - inception
@@ -43,7 +43,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www
     networks:
       - inception
     restart: on-failure
