@@ -47,6 +47,19 @@ services:
     networks:
       - inception
     restart: on-failure
+  
+  redis:
+    container_name: redis
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    restart: on-failure
 
 volumes:
   db:
