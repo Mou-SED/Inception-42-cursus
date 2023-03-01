@@ -24,4 +24,20 @@ wp user create $DB_USER test@gmail.com --role=author --user_pass=$DB_PWD --allow
 
 wp theme install inspiro --activate --allow-root
 
+
+# configuring the plugin Redis Object Cache
+
+# adjust Redis host and port if necessary 
+wp config set WP_REDIS_HOST redis --allow-root
+wp config set WP_REDIS_PORT 6379 --raw --allow-root
+
+# reasonable connection and read+write timeouts
+wp config set WP_REDIS_TIMEOUT 1 --raw --allow-root
+wp config set WP_REDIS_READ_TIMEOUT 1 --raw --allow-root
+
+# redis
+wp plugin install redis-cache --activate --allow-root
+
+wp redis enable --allow-root
+
 php-fpm7
