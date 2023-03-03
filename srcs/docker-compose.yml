@@ -74,6 +74,24 @@ services:
       - 8080:8080
     volumes:
       - wordpress:/var/www
+    restart: on-failure
+
+  ftp:
+    container_name: ftp
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/home/moseddik/ftp/files
+    ports:
+      - "20:20"
+      - "21:21"
+      - "3000-3010:3000-3010"
+    networks:
+      - inception
+    restart: on-failure
 
 volumes:
   db:
