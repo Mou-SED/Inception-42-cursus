@@ -6,45 +6,159 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
-		body {font-family: "Lato", sans-serif}
-		.mySlides {display: none}
-		</style>
-		<style>
-			/* Center the HTML page */
-			html, body {
-				height: 100%;
+			* {
 				margin: 0;
 				padding: 0;
+				font-family: 'Poppins', sans-serif;
+				box-sizing: border-box;
 			}
 			body {
+				background: #dae4ff;	
+			}
+			.card {
+				width: 100%;
+				padding-left: 6%;
+				padding-right: 6%;
+				padding-top: 8%;
+			}
+			button {
+				padding: 15px 40px;
+				border: 0;
+				outline: none;
+				border-radius: 25px;
+				background: #333;
+				color: #fff;
+				font-size: 14px;
+				cursor: pointer;
+				box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+			}
+			.row {
 				display: flex;
-				justify-content: center;
-				align-items: center;
+				width: 100%;
+				background: #fff;
+				border-radius: 15px;
+				overflow: hidden;
+			}
+			.col-1, .col-2 {
+				flex-basis: 50%;
+				overflow: hidden;
+			}
+			.col-2 {
+				width: 100%;
+
+			}
+			.col-1 {
+				padding: 8% 5%;
+				position: relative;
+			}
+			.col-1 h1 {
+				font-size: 60px;
+				line-height: 80px;
+				letter-spacing: 2px;
+				color: #333;
+			}
+			.col-1 p {
+				color: #777;
+				line-height: 22px;
+				margin: 15px 0 30px;
+			}
+			ul {
+				position: absolute;
+				bottom: 30px;
+			}
+			ul li {
+				list-style: none;
+				width: 15px;
+				height: 15px;
+				display: inline-block;
+				background: #bfbfbf;
+				border-radius: 50%;
+				margin-right: 15px;
+				cursor: pointer;
+			}
+			ul .active {
+				background: #333;
+			}
+			.zoom {
+				animation: zoomout 0.5s linear 1;
+			}
+
+			@keyframes zoomout {
+				0% {
+					transform: scale(1.2);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+			#container {
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: end;
+			}
+
+			.created-by {
+				margin-bottom: 6%;
+				margin-right: 6%;
+				font-family: Poppins;
+				color: #333;
 			}
 		</style>
 	</head>
 
 	<body>
-		<!-- Page content -->
-		<div class="content" style="max-width:2000px;margin-top:46px">
-			<!-- The Welcome Section -->
-			<div class="container content center padding-64" style="max-width:800px" id="Welcome">
-					<h2 class="wide" style="text-align: center;">
-						Welcome
-					</h2>
-					<p class="opacity" style="text-align: center;">
-							<i>
-								We love Docker
-							</i>
-					</p>
-					<p class="justify">
-						Welcome to my HTML page! I am delighted to have you here and hope that you enjoy your stay.
-						This page has been designed to provide you with valuable information and an enjoyable browsing experience.
-						Whether you are here to learn something new or just passing by, I hope you find what you are looking for.
-						If you have any questions or feedback, please do not hesitate to get in touch.
-						Thank you for visiting my page, and I hope you have a great time exploring!
-					</p>
+		<div id="container">
+			<div class="card" >
+				<div class="row" >
+					<div class="col-1" >
+						<h1> Explore <br> Nature ^^ </h1>
+						<p> You Can Explore The Nature picture You Want. </p>
+						<a href="https://github.com/Mou-SED" target="_blank" >
+							<button type="button" > Explore Nature </button>
+						</a>
+						<ul>
+							<li class="btn active" ></li>
+							<li class="btn" ></li>
+							<li class="btn" ></li>
+						</ul>
+					</div>
+					<div class="col-2" id="banner" >
+						<img src="https://cdn.pixabay.com/photo/2023/02/05/17/25/leaves-7770035_1280.jpg" width="100%" height="100%">
+					</div>
+				</div>
 			</div>
+			<h1 class="created-by" > Created by moseddik </h1>
 		</div>
+
+		<script>
+			var btn = document.getElementsByClassName("btn");
+			var banner = document.querySelector("#banner img");
+			const imgs = [
+				"https://cdn.pixabay.com/photo/2023/02/05/17/25/leaves-7770035_1280.jpg",
+				"https://cdn.pixabay.com/photo/2023/02/14/18/55/flowers-7790227_1280.jpg",
+				"https://cdn.pixabay.com/photo/2022/11/24/12/22/daisy-7614241_1280.jpg",
+			]
+
+			for (let i = 0; i < 3; ++i)
+			{
+				btn[i].onclick = function() {
+
+					banner.src = imgs[i];
+
+					banner.classList.add("zoom");
+					setTimeout(function(){
+						banner.classList.remove("zoom");
+					}, 500)
+					for (b of btn)
+					{
+						b.classList.remove("active");
+					}
+					this.classList.add("active");
+				}
+			}
+		</script>
+
 	</body>
 </html>
