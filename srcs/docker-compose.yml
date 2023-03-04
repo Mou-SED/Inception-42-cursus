@@ -3,81 +3,84 @@ version: "3"
 services:
 
   nginx:
+    container_name: nginx
+    image: "ngnix:1337"
     build:
       context : ./requirements/nginx
       dockerfile: Dockerfile
-    container_name: nginx
-    ports:
-      - "443:443"
     depends_on:
       - wordpress
     volumes:
       - wordpress:/var/www
-    image: "ngnix:1337"
+    ports:
+      - "443:443"
     networks:
       - inception
     restart: on-failure
 
   mariadb:
+    container_name: mariadb
+    image: mariadb:1337
     build:
       context : ./requirements/mariadb
       dockerfile: Dockerfile
-    container_name: mariadb
-    image: mariadb:1337
-    env_file:
-      - .env
     volumes:
       - db:/var/lib/mysql
     networks:
       - inception
+    env_file:
+      - .env
     restart: on-failure
 
   wordpress:
+    container_name: wordpress
+    image: wordpress:1337
     build:
       context : ./requirements/wordpress
       dockerfile: Dockerfile
-    container_name: wordpress
     depends_on:
       - mariadb
-    image: wordpress:1337
-    env_file:
-      - .env
     volumes:
       - wordpress:/var/www
     networks:
       - inception
+    env_file:
+      - .env
     restart: on-failure
   
   redis:
     container_name: redis
+    image: redis:1337
     build:
       context: ./requirements/bonus/redis
       dockerfile: Dockerfile
-    volumes:
-      - wordpress:/var/www
     depends_on:
       - wordpress
+    volumes:
+      - wordpress:/var/www
     networks:
       - inception
     restart: on-failure
   
   adminer:
     container_name: adminer
+    image: adminer:1337
     build:
       context: ./requirements/bonus/adminer
       dockerfile: Dockerfile
     depends_on:
       - mariadb
-    networks:
-      - inception
     ports:
       - 8080:8080
+    networks:
+      - inception
     volumes:
       - wordpress:/var/www
     restart: on-failure
 
   ftp:
     container_name: ftp
+    image: ftp:1337
     build:
       context: ./requirements/bonus/ftp
       dockerfile: Dockerfile
