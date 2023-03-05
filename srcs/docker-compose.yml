@@ -71,7 +71,7 @@ services:
     depends_on:
       - mariadb
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - inception
     volumes:
@@ -94,6 +94,16 @@ services:
       - "3000-3010:3000-3010"
     networks:
       - inception
+    restart: on-failure
+  
+  hugo:
+    container_name: hugo
+    image: hugo:1337
+    build:
+      context: ./requirements/bonus/hugo
+      dockerfile: Dockerfile
+    ports:
+      - "1313:1313"
     restart: on-failure
 
 volumes:
