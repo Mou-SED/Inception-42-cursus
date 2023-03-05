@@ -30,9 +30,8 @@ rmi:
 down:
 	@docker-compose -f $(DOCKER_F) down
 
-fclean:
+fclean: down
 	@printf "Total clean of all configurations docker\n"
-	@docker stop $$(docker ps -qa)
 	@docker system prune --all --force --volumes
 	@docker network prune --force
 	@docker volume prune --force
